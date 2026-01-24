@@ -1,0 +1,972 @@
+{
+	"info": {
+		"_postman_id": "campus-management-api",
+		"name": "Campus Management System API",
+		"description": "Complete API collection for Campus Management System with success and failure test cases",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Get All Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students"]
+						}
+					}
+				},
+				{
+					"name": "Get Student by ID - Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Student by ID - Not Found",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/99999",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "99999"]
+						}
+					}
+				},
+				{
+					"name": "Create Student - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Иван\",\n  \"lastName\": \"Петров\",\n  \"email\": \"ivan.petrov@example.com\",\n  \"studentNumber\": \"STU001\",\n  \"dateOfBirth\": \"2000-01-15\",\n  \"enrollmentDate\": \"2023-09-01\",\n  \"address\": {\n    \"street\": \"ул. Главна 123\",\n    \"city\": \"Пловдив\",\n    \"state\": \"Пловдив\",\n    \"postalCode\": \"4000\",\n    \"country\": \"България\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students"]
+						}
+					}
+				},
+				{
+					"name": "Create Student - Duplicate Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Друг\",\n  \"lastName\": \"Студент\",\n  \"email\": \"ivan.petrov@example.com\",\n  \"studentNumber\": \"STU999\",\n  \"dateOfBirth\": \"2001-05-20\",\n  \"enrollmentDate\": \"2023-09-01\",\n  \"address\": {\n    \"street\": \"ул. Друга 456\",\n    \"city\": \"София\",\n    \"state\": \"София\",\n    \"postalCode\": \"1000\",\n    \"country\": \"България\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students"]
+						}
+					}
+				},
+				{
+					"name": "Create Student - Validation Error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"\",\n  \"lastName\": \"\",\n  \"email\": \"invalid-email\",\n  \"studentNumber\": \"\",\n  \"dateOfBirth\": \"2025-01-01\",\n  \"enrollmentDate\": null\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students"]
+						}
+					}
+				},
+				{
+					"name": "Update Student - Success",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Иван\",\n  \"lastName\": \"Петров\",\n  \"email\": \"ivan.petrov.updated@example.com\",\n  \"studentNumber\": \"STU001\",\n  \"dateOfBirth\": \"2000-01-15\",\n  \"enrollmentDate\": \"2023-09-01\",\n  \"address\": {\n    \"street\": \"ул. Обновена 789\",\n    \"city\": \"Пловдив\",\n    \"state\": \"Пловдив\",\n    \"postalCode\": \"4000\",\n    \"country\": \"България\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "1"]
+						}
+					}
+				},
+				{
+					"name": "Update Student - Not Found",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Тест\",\n  \"lastName\": \"Тестов\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students/99999",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "99999"]
+						}
+					}
+				},
+				{
+					"name": "Delete Student - Success",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Student - Not Found",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/students/99999",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "99999"]
+						}
+					}
+				},
+				{
+					"name": "Search Students - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"Иван\",\n  \"city\": \"Пловдив\",\n  \"enrollmentYear\": 2023\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students/search",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "search"]
+						}
+					}
+				},
+				{
+					"name": "Search Students - Empty Result",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"Несъществуващ\",\n  \"city\": \"НямаТакъвГрад\",\n  \"enrollmentYear\": 1999\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/students/search",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "students", "search"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Get All Courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/courses",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "courses"]
+						}
+					}
+				},
+				{
+					"name": "Get Course by ID - Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/courses/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "courses", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Course by ID - Not Found",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/courses/99999",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "courses", "99999"]
+						}
+					}
+				},
+				{
+					"name": "Create Course - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"courseCode\": \"CS401\",\n  \"courseName\": \"Advanced Software Engineering\",\n  \"description\": \"Advanced topics in software engineering\",\n  \"credits\": 6,\n  \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/courses",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "courses"]
+						}
+					}
+				},
+				{
+					"name": "Create Course - Duplicate Code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"courseCode\": \"CS101\",\n  \"courseName\": \"Duplicate Course\",\n  \"description\": \"This should fail\",\n  \"credits\": 3,\n  \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/courses",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "courses"]
+						}
+					}
+				},
+				{
+					"name": "Create Course - Validation Error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"courseCode\": \"\",\n  \"courseName\": \"\",\n  \"credits\": -1,\n  \"departmentId\": null\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/courses",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "courses"]
+						}
+					}
+				},
+				{
+					"name": "Update Course - Success",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"courseCode\": \"CS101\",\n  \"courseName\": \"Introduction to Programming - Updated\",\n  \"description\": \"Updated description\",\n  \"credits\": 6,\n  \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/courses/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "courses", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Course - Success",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/courses/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "courses", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Courses by Department",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/courses/department/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "courses", "department", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Departments",
+			"item": [
+				{
+					"name": "Get All Departments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/departments",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "departments"]
+						}
+					}
+				},
+				{
+					"name": "Get Department by ID - Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/departments/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "departments", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Department - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Information Systems\",\n  \"code\": \"IS\",\n  \"description\": \"Department of Information Systems\",\n  \"building\": \"Building D, Floor 2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/departments",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "departments"]
+						}
+					}
+				},
+				{
+					"name": "Create Department - Duplicate Name",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Computer Science\",\n  \"code\": \"CS2\",\n  \"description\": \"Duplicate name test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/departments",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "departments"]
+						}
+					}
+				},
+				{
+					"name": "Update Department - Success",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Computer Science\",\n  \"code\": \"CS\",\n  \"description\": \"Updated description\",\n  \"building\": \"Building A, Floor 4\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/departments/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "departments", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Department - Success",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/departments/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "departments", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Professors",
+			"item": [
+				{
+					"name": "Get All Professors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/professors",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "professors"]
+						}
+					}
+				},
+				{
+					"name": "Get Professor by ID - Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/professors/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "professors", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Professor - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Петър\",\n  \"lastName\": \"Стоянов\",\n  \"email\": \"petar.stoyanov@fmi.plovdiv.bg\",\n  \"phoneNumber\": \"+359 32 456 789\",\n  \"specialization\": \"Machine Learning\",\n  \"title\": \"Associate Professor\",\n  \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/professors",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "professors"]
+						}
+					}
+				},
+				{
+					"name": "Create Professor - Duplicate Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Друг\",\n  \"lastName\": \"Професор\",\n  \"email\": \"ivan.petrov@fmi.plovdiv.bg\",\n  \"departmentId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/professors",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "professors"]
+						}
+					}
+				},
+				{
+					"name": "Get Professors by Department",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/professors/department/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "professors", "department", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Enrollments",
+			"item": [
+				{
+					"name": "Get All Enrollments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/enrollments",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "enrollments"]
+						}
+					}
+				},
+				{
+					"name": "Create Enrollment - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": 1,\n  \"courseId\": 1,\n  \"enrollmentDate\": \"2024-09-01\",\n  \"semester\": \"Fall 2024\",\n  \"year\": 2024,\n  \"status\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/enrollments",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "enrollments"]
+						}
+					}
+				},
+				{
+					"name": "Create Enrollment - Already Enrolled",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": 1,\n  \"courseId\": 1,\n  \"enrollmentDate\": \"2024-09-01\",\n  \"semester\": \"Fall 2024\",\n  \"year\": 2024\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/enrollments",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "enrollments"]
+						}
+					}
+				},
+				{
+					"name": "Get Enrollments by Student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/enrollments/student/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "enrollments", "student", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Enrollments by Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/enrollments/course/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "enrollments", "course", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Active Enrollments by Student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/enrollments/student/1/active",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "enrollments", "student", "1", "active"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Clubs",
+			"item": [
+				{
+					"name": "Get All Clubs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clubs",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clubs"]
+						}
+					}
+				},
+				{
+					"name": "Create Club - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Chess Club\",\n  \"description\": \"A club for chess enthusiasts\",\n  \"category\": \"Recreational\",\n  \"presidentEmail\": \"president@chessclub.fmi.plovdiv.bg\",\n  \"memberLimit\": 20\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clubs",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clubs"]
+						}
+					}
+				},
+				{
+					"name": "Create Club - Duplicate Name",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Programming Club\",\n  \"description\": \"Duplicate test\",\n  \"category\": \"Academic\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clubs",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clubs"]
+						}
+					}
+				},
+				{
+					"name": "Add Student to Club - Success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clubs/1/students/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clubs", "1", "students", "1"]
+						}
+					}
+				},
+				{
+					"name": "Add Student to Club - Already Member",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clubs/1/students/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clubs", "1", "students", "1"]
+						}
+					}
+				},
+				{
+					"name": "Add Student to Club - Club Full",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clubs/1/students/2",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clubs", "1", "students", "2"]
+						},
+						"description": "This will fail if club has reached memberLimit"
+					}
+				},
+				{
+					"name": "Remove Student from Club - Success",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clubs/1/students/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clubs", "1", "students", "1"]
+						}
+					}
+				},
+				{
+					"name": "Remove Student from Club - Not Member",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clubs/1/students/999",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clubs", "1", "students", "999"]
+						}
+					}
+				},
+				{
+					"name": "Get Clubs by Student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clubs/student/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clubs", "student", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Process Report - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"input\": \"Sample data to process\",\n  \"metadata\": {\n    \"source\": \"api\",\n    \"type\": \"report\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/reports/process",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "reports", "process"]
+						},
+						"description": "This endpoint calls app-internal service for data processing"
+					}
+				},
+				{
+					"name": "Process Report - Empty Input",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"input\": \"\",\n  \"metadata\": {}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/reports/process",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "reports", "process"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Health Checks",
+			"item": [
+				{
+					"name": "App Public Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["actuator", "health"]
+						}
+					}
+				},
+				{
+					"name": "App Internal Health - Should Fail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8081",
+							"path": ["api", "health"]
+						},
+						"description": "This should fail because app-internal is not publicly accessible"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
