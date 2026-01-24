@@ -1,0 +1,95 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: campus-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app-internal:
+    platform: linux/amd64
+    build:
+      context: ./app-internal
+      dockerfile: Dockerfile
+      args:
+        JAVA_VERSION: ${JAVA_VERSION}
+    image: campus/app-internal:1.0
+    environment:
+      SERVER_PORT: ${APP_INTERNAL_PORT}
+      LOG_PATH: ${LOG_PATH}
+      SPRING_PROFILES_ACTIVE: docker
+    volumes:
+      - app_internal_logs:${LOG_PATH}
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${APP_INTERNAL_PORT}/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  app-public:
+    platform: linux/amd64
+    build:
+      context: ./app-public
+      dockerfile: Dockerfile
+      args:
+        JAVA_VERSION: ${JAVA_VERSION}
+    image: campus/app-public:1.0
+    ports:
+      - "${APP_PUBLIC_PORT}:${APP_PUBLIC_PORT}"
+    environment:
+      SERVER_PORT: ${APP_PUBLIC_PORT}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      INTERNAL_SERVICE_URL: http://${APP_INTERNAL_HOST}:${APP_INTERNAL_PORT}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      app-internal:
+        condition: service_healthy
+    networks:
+      - public
+      - internal
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${APP_PUBLIC_PORT}/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1024M
+
+networks:
+  public:
+    driver: bridge
+  internal:
+    driver: bridge
+    internal: true
+
+volumes:
+  postgres_data:
+    driver: local
+  app_internal_logs:
+    driver: local
