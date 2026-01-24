@@ -60,7 +60,7 @@
 
 ### Сървиси
 
-- **app-public**: Публично REST API за управление на кампус (студенти, курсове, катедри, професори, записи, клубове)
+- **app-public**: Публично REST API за управление на кампус (students, courses, departments, professors, enrollments, clubs)
 - **app-internal**: Вътрешен сървис за нормализация и валидиране на данни
 - **postgres**: PostgreSQL база данни
 
@@ -92,7 +92,7 @@
 docker build -t campus/base:1.0 ./base
 ```
 
-Ако сте на Apple Silicon Mac (M1/M2/M3), използвайте:
+Ако сте на Apple Silicon Mac (M1/M2/M3/M4), използвайте:
 
 ```bash
 docker build --platform linux/amd64 -t campus/base:1.0 ./base
@@ -127,19 +127,19 @@ docker-compose ps
 За да демонстрирате мащабиране с множество инстанции на app-public:
 
 1. Спрете текущите сървиси:
-```bash
-docker-compose down
-```
+    ```bash
+    docker-compose down
+    ```
 
 2. Стартирайте с 2 инстанции на app-public:
-```bash
-docker-compose up --scale app-public=2 -d
-```
+    ```bash
+    docker-compose up --scale app-public=2 -d
+    ```
 
 3. Проверете статуса:
-```bash
-docker-compose ps
-```
+    ```bash
+    docker-compose ps
+    ```
 
 Трябва да видите 2 инстанции на app-public (например `campus-management-app-public-1` и `campus-management-app-public-2`). И двете инстанции могат да обработват заявки и ще извикват app-internal през вътрешната мрежа.
 
@@ -168,26 +168,26 @@ docker-compose logs app-internal
 #### Тест за персистентност:
 
 1. Създайте заявка, която генерира логове:
-```bash
-curl -X POST http://localhost:8080/api/reports/process \
-  -H "Content-Type: application/json" \
-  -d '{"input": "test data"}'
-```
+    ```bash
+    curl -X POST http://localhost:8080/api/reports/process \
+      -H "Content-Type: application/json" \
+      -d '{"input": "test data"}'
+    ```
 
 2. Проверете логовете:
-```bash
-docker-compose exec app-internal cat /var/log/app/campus-processor.log
-```
+    ```bash
+    docker-compose exec app-internal cat /var/log/app/campus-processor.log
+    ```
 
 3. Рестартирайте app-internal:
-```bash
-docker-compose restart app-internal
-```
+    ```bash
+    docker-compose restart app-internal
+    ```
 
 4. Проверете логовете отново - те трябва да са все още там:
-```bash
-docker-compose exec app-internal cat /var/log/app/campus-processor.log
-```
+    ```bash
+    docker-compose exec app-internal cat /var/log/app/campus-processor.log
+    ```
 
 ### Спиране и почистване
 
@@ -326,47 +326,47 @@ docker network inspect campus-management_public
 
 ## Тестови примери
 
-### Пример 1: Създаване на студент
+### Пример 1: Създаване на student
 
 ```bash
 curl -X POST http://localhost:8080/api/students \
   -H "Content-Type: application/json" \
   -d '{
-    "firstName": "Иван",
-    "lastName": "Петров",
-    "email": "ivan.petrov@example.com",
-    "studentNumber": "STU001",
+    "firstName": "Chackie",
+    "lastName": "Jan",
+    "email": "chakie.jan@veryhotmail.com",
+    "studentNumber": "STU123",
     "dateOfBirth": "2000-01-15",
     "enrollmentDate": "2023-09-01",
     "address": {
-      "street": "ул. Главна 123",
-      "city": "Пловдив",
-      "state": "Пловдив",
-      "postalCode": "4000",
-      "country": "България"
+      "street": "Main Street",
+      "city": "Yew Nork",
+      "state": "Cool State",
+      "postalCode": "4610",
+      "country": "Italy"
     }
   }'
 ```
 
-### Пример 2: Динамично търсене на студенти
+### Пример 2: Динамично търсене на students
 
 ```bash
 curl -X POST http://localhost:8080/api/students/search \
   -H "Content-Type: application/json" \
   -d '{
-    "studentName": "Иван",
-    "city": "Пловдив",
+    "studentName": "John",
+    "city": "Plovdiv",
     "enrollmentYear": 2023
   }'
 ```
 
-### Пример 3: Обработка на отчет (извиква app-internal)
+### Пример 3: Обработка на report (извиква app-internal)
 
 ```bash
 curl -X POST http://localhost:8080/api/reports/process \
   -H "Content-Type: application/json" \
   -d '{
-    "input": "Примерни данни за обработка",
+    "input": "Example data",
     "metadata": {
       "source": "api",
       "type": "report"
@@ -377,7 +377,7 @@ curl -X POST http://localhost:8080/api/reports/process \
 **Очакван отговор:**
 ```json
 {
-  "result": "примерни данни за обработка",
+  "result": "Example data",
   "status": "SUCCESS",
   "timestamp": "2024-01-24T10:30:00",
   "processedCount": 3
