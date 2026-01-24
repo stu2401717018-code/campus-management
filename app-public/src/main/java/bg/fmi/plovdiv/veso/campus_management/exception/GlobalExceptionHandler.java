@@ -19,6 +19,22 @@ import java.util.Map;
 public class GlobalExceptionHandler
 {
     /**
+     * Handle NoException
+     * Returns 418 I'M A TEAPOT (or something else?)
+     */
+    @ExceptionHandler(NoException.class)
+    public ResponseEntity<ErrorResponse> handleNoException(NoException ex)
+    {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.I_AM_A_TEAPOT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.I_AM_A_TEAPOT);
+    }
+
+    /**
      * Handle ResourceNotFoundException
      * Returns 404 NOT FOUND
      */
