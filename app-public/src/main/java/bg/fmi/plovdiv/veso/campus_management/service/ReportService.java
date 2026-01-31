@@ -24,9 +24,9 @@ import java.util.Map;
 public class ReportService
 {
     private static final Logger logger = LoggerFactory.getLogger(ReportService.class);
-    
+
     private final RestTemplate restTemplate;
-    
+
     /**
      * URL of the internal service for data processing.
      * Defaults to http://app-internal:8081 if not configured.
@@ -50,52 +50,43 @@ public class ReportService
     public ReportResponseDTO processReport(ReportRequestDTO request)
     {
         logger.info("Processing report request: input={}", request.getInput());
-        
-        try
-        {
+
+        try {
             String url = internalServiceUrl + "/api/partial";
-            
+
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            
+
             Map<String, Object> requestBody = new HashMap<>();
             requestBody.put("input", request.getInput());
             requestBody.put("metadata", request.getMetadata());
-            
+
             HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
-            
+
             ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
-            
+
             Map<String, Object> responseBody = response.getBody();
-            
+
             ReportResponseDTO reportResponse = new ReportResponseDTO();
             reportResponse.setResult((String) responseBody.get("processedData"));
             reportResponse.setStatus((String) responseBody.get("status"));
             reportResponse.setProcessedCount((Integer) responseBody.get("processedCount"));
-            
-            if (responseBody.get("timestamp") != null)
-            {
-                try
-                {
+
+            if (responseBody.get("timestamp") != null) {
+                try {
                     String timestampStr = responseBody.get("timestamp").toString();
                     reportResponse.setTimestamp(java.time.LocalDateTime.parse(timestampStr));
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     reportResponse.setTimestamp(java.time.LocalDateTime.now());
                 }
-            }
-            else
-            {
+            } else {
                 reportResponse.setTimestamp(java.time.LocalDateTime.now());
             }
-            
+
             logger.info("Report processing completed: status={}", reportResponse.getStatus());
 
             return reportResponse;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             logger.error("Error processing report", e);
             ReportResponseDTO errorResponse = new ReportResponseDTO();
             errorResponse.setResult("Error: " + e.getMessage());

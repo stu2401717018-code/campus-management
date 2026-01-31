@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * REST Controller for Club endpoints.
+ * Controller for Club endpoints.
  */
 @RestController
 @RequestMapping("/api/clubs")

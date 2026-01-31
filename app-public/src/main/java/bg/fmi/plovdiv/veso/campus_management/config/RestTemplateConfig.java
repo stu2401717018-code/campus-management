@@ -16,8 +16,6 @@ public class RestTemplateConfig
 {
     /**
      * Creates a RestTemplate bean with configured timeouts.
-     * Connect timeout: 5 seconds
-     * Read timeout: 10 seconds
      *
      * @return configured RestTemplate instance
      */

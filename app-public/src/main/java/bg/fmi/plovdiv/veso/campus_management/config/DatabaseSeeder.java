@@ -27,6 +27,16 @@ public class DatabaseSeeder implements CommandLineRunner
     private final EnrollmentRepository enrollmentRepository;
     private final ClubRepository clubRepository;
 
+    /**
+     * @param departmentRepository
+     * @param professorRepository
+     * @param courseRepository
+     * @param studentRepository
+     * @param addressRepository
+     * @param enrollmentRepository
+     * @param clubRepository
+     * @inheritDoc
+     */
     @Autowired
     public DatabaseSeeder(
             DepartmentRepository departmentRepository,
@@ -60,21 +70,21 @@ public class DatabaseSeeder implements CommandLineRunner
         csDept.setCode("CS");
         csDept.setDescription("Department of Computer Science and Software Engineering");
         csDept.setBuilding("Building A, Floor 3");
-        csDept = departmentRepository.save(csDept);
+        departmentRepository.save(csDept);
 
         Department mathDept = new Department();
         mathDept.setName("Mathematics");
         mathDept.setCode("MATH");
         mathDept.setDescription("Department of Mathematics and Statistics");
         mathDept.setBuilding("Building B, Floor 2");
-        mathDept = departmentRepository.save(mathDept);
+        departmentRepository.save(mathDept);
 
         Department physicsDept = new Department();
         physicsDept.setName("Physics");
         physicsDept.setCode("PHYS");
         physicsDept.setDescription("Department of Physics and Astronomy");
         physicsDept.setBuilding("Building C, Floor 1");
-        physicsDept = departmentRepository.save(physicsDept);
+        departmentRepository.save(physicsDept);
 
         Professor prof1 = new Professor();
         prof1.setFirstName("Ivan");
@@ -84,7 +94,7 @@ public class DatabaseSeeder implements CommandLineRunner
         prof1.setSpecialization("Software Engineering");
         prof1.setTitle("Associate Professor");
         prof1.setDepartment(csDept);
-        prof1 = professorRepository.save(prof1);
+        professorRepository.save(prof1);
 
         Professor prof2 = new Professor();
         prof2.setFirstName("Maria");
@@ -94,7 +104,7 @@ public class DatabaseSeeder implements CommandLineRunner
         prof2.setSpecialization("Database Systems");
         prof2.setTitle("Professor");
         prof2.setDepartment(csDept);
-        prof2 = professorRepository.save(prof2);
+        professorRepository.save(prof2);
 
         Professor prof3 = new Professor();
         prof3.setFirstName("Georgi");
@@ -104,7 +114,7 @@ public class DatabaseSeeder implements CommandLineRunner
         prof3.setSpecialization("Linear Algebra");
         prof3.setTitle("Assistant Professor");
         prof3.setDepartment(mathDept);
-        prof3 = professorRepository.save(prof3);
+        professorRepository.save(prof3);
 
         Course course1 = new Course();
         course1.setCourseCode("CS101");
@@ -112,7 +122,7 @@ public class DatabaseSeeder implements CommandLineRunner
         course1.setDescription("Fundamentals of programming using Java");
         course1.setCredits(6);
         course1.setDepartment(csDept);
-        course1 = courseRepository.save(course1);
+        courseRepository.save(course1);
 
         Course course2 = new Course();
         course2.setCourseCode("CS201");
@@ -120,7 +130,7 @@ public class DatabaseSeeder implements CommandLineRunner
         course2.setDescription("Advanced data structures and algorithm analysis");
         course2.setCredits(6);
         course2.setDepartment(csDept);
-        course2 = courseRepository.save(course2);
+        courseRepository.save(course2);
 
         Course course3 = new Course();
         course3.setCourseCode("CS301");
@@ -128,7 +138,7 @@ public class DatabaseSeeder implements CommandLineRunner
         course3.setDescription("Relational database design and SQL");
         course3.setCredits(5);
         course3.setDepartment(csDept);
-        course3 = courseRepository.save(course3);
+        courseRepository.save(course3);
 
         Course course4 = new Course();
         course4.setCourseCode("MATH101");
@@ -136,7 +146,7 @@ public class DatabaseSeeder implements CommandLineRunner
         course4.setDescription("Differential and integral calculus");
         course4.setCredits(6);
         course4.setDepartment(mathDept);
-        course4 = courseRepository.save(course4);
+        courseRepository.save(course4);
 
         Course course5 = new Course();
         course5.setCourseCode("MATH201");
@@ -144,7 +154,7 @@ public class DatabaseSeeder implements CommandLineRunner
         course5.setDescription("Vector spaces, matrices, and linear transformations");
         course5.setCredits(5);
         course5.setDepartment(mathDept);
-        course5 = courseRepository.save(course5);
+        courseRepository.save(course5);
 
         Address address1 = new Address();
         address1.setStreet("123 Main Street");
@@ -152,7 +162,7 @@ public class DatabaseSeeder implements CommandLineRunner
         address1.setState("Plovdiv");
         address1.setPostalCode("4000");
         address1.setCountry("Bulgaria");
-        address1 = addressRepository.save(address1);
+        addressRepository.save(address1);
 
         Address address2 = new Address();
         address2.setStreet("456 University Avenue");
@@ -160,7 +170,7 @@ public class DatabaseSeeder implements CommandLineRunner
         address2.setState("Plovdiv");
         address2.setPostalCode("4000");
         address2.setCountry("Bulgaria");
-        address2 = addressRepository.save(address2);
+        addressRepository.save(address2);
 
         Address address3 = new Address();
         address3.setStreet("789 Student Boulevard");
@@ -168,7 +178,7 @@ public class DatabaseSeeder implements CommandLineRunner
         address3.setState("Sofia");
         address3.setPostalCode("1000");
         address3.setCountry("Bulgaria");
-        address3 = addressRepository.save(address3);
+        addressRepository.save(address3);
 
         Student student1 = new Student();
         student1.setFirstName("John");
@@ -178,7 +188,7 @@ public class DatabaseSeeder implements CommandLineRunner
         student1.setDateOfBirth(LocalDate.of(2002, 5, 15));
         student1.setEnrollmentDate(LocalDate.of(2023, 9, 1));
         student1.setAddress(address1);
-        student1 = studentRepository.save(student1);
+        studentRepository.save(student1);
 
         Student student2 = new Student();
         student2.setFirstName("Jane");
@@ -188,7 +198,7 @@ public class DatabaseSeeder implements CommandLineRunner
         student2.setDateOfBirth(LocalDate.of(2003, 8, 20));
         student2.setEnrollmentDate(LocalDate.of(2023, 9, 1));
         student2.setAddress(address2);
-        student2 = studentRepository.save(student2);
+        studentRepository.save(student2);
 
         Student student3 = new Student();
         student3.setFirstName("Petar");
@@ -198,7 +208,7 @@ public class DatabaseSeeder implements CommandLineRunner
         student3.setDateOfBirth(LocalDate.of(2001, 12, 10));
         student3.setEnrollmentDate(LocalDate.of(2022, 9, 1));
         student3.setAddress(address3);
-        student3 = studentRepository.save(student3);
+        studentRepository.save(student3);
 
         Enrollment enrollment1 = new Enrollment();
         enrollment1.setStudent(student1);
@@ -264,7 +274,7 @@ public class DatabaseSeeder implements CommandLineRunner
         club1.setCategory("Academic");
         club1.setPresidentEmail("president@programmingclub.fmi.plovdiv.bg");
         club1.setMemberLimit(50);
-        club1 = clubRepository.save(club1);
+        clubRepository.save(club1);
 
         Club club2 = new Club();
         club2.setName("Mathematics Society");
@@ -272,7 +282,7 @@ public class DatabaseSeeder implements CommandLineRunner
         club2.setCategory("Academic");
         club2.setPresidentEmail("president@mathsociety.fmi.plovdiv.bg");
         club2.setMemberLimit(30);
-        club2 = clubRepository.save(club2);
+        clubRepository.save(club2);
 
         Club club3 = new Club();
         club3.setName("Sports Club");
@@ -280,7 +290,7 @@ public class DatabaseSeeder implements CommandLineRunner
         club3.setCategory("Recreational");
         club3.setPresidentEmail("president@sportsclub.fmi.plovdiv.bg");
         club3.setMemberLimit(100);
-        club3 = clubRepository.save(club3);
+        clubRepository.save(club3);
 
         student1.addClub(club1);
         student1.addClub(club3);
